@@ -61,4 +61,6 @@ func main() {
 	fmt.Printf("insertion-sorted: %v\n", b)
 	bubbleSort(c)
 	fmt.Printf("bubble-sorted: %v\n", c)
+
+	test_qsort()
 }
