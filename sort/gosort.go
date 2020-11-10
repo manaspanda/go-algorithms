@@ -9,16 +9,17 @@ type Person struct {
 	Name string
 	Age  int
 }
-type Persons []*Person
-type ByAge struct{ Persons }
+type Persons struct {
+	list []*Person
+}
 
-func (p Persons) Len() int         { return len(p) }
-func (p Persons) Swap(i, j int)    { p[i], p[j] = p[j], p[i] }
-func (p ByAge) Less(i, j int) bool { return p.Persons[i].Age < p.Persons[j].Age }
+func (p Persons) Len() int           { return len(p.list) }
+func (p Persons) Swap(i, j int)      { p.list[i], p.list[j] = p.list[j], p.list[i] }
+func (p Persons) Less(i, j int) bool { return p.list[i].Age < p.list[j].Age }
 
-func PrintPerson(p Persons) {
-	for i := 0; i < len(p); i++ {
-		fmt.Printf("%v, ", *p[i])
+func (p Persons) Print() {
+	for i := 0; i < len(p.list); i++ {
+		fmt.Printf("%v, ", *p.list[i])
 	}
 }
 
@@ -38,13 +39,15 @@ func test_sortpkg() {
 	fmt.Printf("==> %v\n", stra)
 
 	// Sort Persons array
-	family := []*Person{
-		{"Seema", 48}, {"Anshul", 19}, {"Manas", 50}, {"Nola", 2}, {"Richa", 15},
+	family := Persons{
+		list: []*Person{
+			{"Sandy", 48}, {"Andrew", 19}, {"Manuel", 50}, {"Nola", 2}, {"Rachel", 15},
+		},
 	}
 	fmt.Printf("\nSort ")
-	PrintPerson(family)
-	sort.Sort(ByAge{family})
+	family.Print()
+	sort.Sort(family)
 	fmt.Printf("\n==> ")
-	PrintPerson(family)
+	family.Print()
 	fmt.Printf("\n")
 }
