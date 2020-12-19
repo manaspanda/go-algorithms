@@ -71,6 +71,19 @@ func Delete(root *TreeNode, key int) *TreeNode {
 	return root
 }
 
+func Height(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	lh := Height(root.left)
+	rh := Height(root.right)
+	h := lh
+	if rh > lh {
+		h = rh
+	}
+	return h + 1
+}
+
 type BSTNodePlugin func(t *TreeNode)
 
 func NodePrint(t *TreeNode) {
@@ -117,6 +130,7 @@ func test_bst() {
 	Insert(bst1, 5)
 	fmt.Println("\n------ BST:walk-in -------")
 	BSTWalkInOrder(bst1, NodePrint)
+	fmt.Println("\nHeight =>", Height(bst1))
 	fmt.Println("\n------ BST:walk-pre -------")
 	BSTWalkPreOrder(bst1, NodePrint)
 	fmt.Println("\n------ BST:walk-post -------")
@@ -134,5 +148,6 @@ func test_bst() {
 	Insert(bst1, 5)
 	Delete(bst1, 4)
 	BSTWalkInOrder(bst1, NodePrint)
+	fmt.Println("\nHeight =>", Height(bst1))
 	fmt.Println("\n------------------")
 }
